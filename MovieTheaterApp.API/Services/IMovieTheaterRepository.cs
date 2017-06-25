@@ -16,6 +16,10 @@ namespace MovieTheaterApp.API.Services
 
         void DeleteMovie(Movie movie);
 
+        Hall GetHall(int hallId);
+
+        void AddShow(Show show);
+
         bool Save();
     }
 }

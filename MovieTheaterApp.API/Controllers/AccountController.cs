@@ -58,11 +58,14 @@ namespace MovieTheaterApp.API.Controllers
                 {
                     if (_pwdHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
                     {
+                        var userClaims = await _userManager.GetClaimsAsync(user);
+
                         var claims = new[]
                         {
                             new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                        };
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.Email, user.Email)
+                        }.Union(userClaims);
 
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
                         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -75,11 +78,8 @@ namespace MovieTheaterApp.API.Controllers
                             signingCredentials: credentials);
 
                         return Ok(new
-                        {
-                            username = user.UserName,
-                            emailAddress = user.Email,
-                            token = new JwtSecurityTokenHandler().WriteToken(token),
-                            expires = token.ValidTo
+                        {                            
+                            user_token = new JwtSecurityTokenHandler().WriteToken(token)
                         });
                     }
                 }

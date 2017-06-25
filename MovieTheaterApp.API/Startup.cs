@@ -37,7 +37,7 @@ namespace MovieTheaterApp.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(_config);
+            services.AddSingleton(_config);            
             services.AddMvc();
             services.AddCors(options =>
             {
@@ -46,14 +46,23 @@ namespace MovieTheaterApp.API
                                       .AllowAnyMethod()
                                       .AllowAnyHeader());
             });
+            services.AddAuthorization(cfg =>
+            {
+                cfg.AddPolicy("SuperUsers", p => p.RequireClaim("SuperUser", "true"));
+            });
             services.AddDbContext<MovieTheaterContext>(options => options.UseSqlServer(_config.GetConnectionString("MovieTheaterApp")));
             services.AddScoped<IMovieTheaterRepository, MovieTheaterRepository>();
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<MovieTheaterContext>();                
+                .AddEntityFrameworkStores<MovieTheaterContext>();
+            services.AddTransient<IdentitySeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, MovieTheaterContext movieTheaterContext)
+        public void Configure(IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            ILoggerFactory loggerFactory, 
+            MovieTheaterContext movieTheaterContext,
+            IdentitySeeder identitySeeder)
         {
             loggerFactory.AddConsole();
 
@@ -74,6 +83,7 @@ namespace MovieTheaterApp.API
                 cfg.CreateMap<MovieDto, Movie>();
                 cfg.CreateMap<Movie, MovieDto>();
                 cfg.CreateMap<Movie, MovieWithShowsDto>();
+                cfg.CreateMap<Hall, HallDto>();
                 cfg.CreateMap<Show, ShowDto>();
             });
 
@@ -87,12 +97,15 @@ namespace MovieTheaterApp.API
                 {
                     ValidIssuer = _config["Tokens:Issuer"],
                     ValidAudience = _config["Tokens:Audience"],
+                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"])),
                     ValidateLifetime = true
                 }
             });
 
             app.UseMvc();
+
+            identitySeeder.Seed().Wait();
 
             //app.Run(async (context) =>
             //{
