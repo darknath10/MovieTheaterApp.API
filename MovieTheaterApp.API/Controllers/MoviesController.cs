@@ -69,6 +69,24 @@ namespace MovieTheaterApp.API.Controllers
             }
         }
 
+        [HttpGet("search/{term}")]
+        [AllowAnonymous]
+        public IActionResult SearchMovies(string term)
+        {
+            try
+            {
+                if (term == null) return BadRequest("Search term cannot be null");
+
+                var movies = _movieTheaterRepository.SearchMovies(term);
+                if (movies == null) return NotFound();
+                return Ok(Mapper.Map<IEnumerable<MovieDto>>(movies));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost]
         public IActionResult AddMovie([FromBody] MovieDtoAdd movieDto)
         {

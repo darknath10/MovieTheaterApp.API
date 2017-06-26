@@ -22,6 +22,11 @@ namespace MovieTheaterApp.API.Services
             return _context.Movies.ToList();
         }
 
+        public IEnumerable<Movie> SearchMovies(string term)
+        {
+            return _context.Movies.Where(m => m.Title.Contains(term));
+        }
+
         public Movie GetMovie(int movieId, bool includeShows)
         {
             if (includeShows)

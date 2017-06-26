@@ -10,6 +10,8 @@ namespace MovieTheaterApp.API.Services
     {
         IEnumerable<Movie> GetMovies();
 
+        IEnumerable<Movie> SearchMovies(string term);
+
         Movie GetMovie(int movieId, bool includeShows);
 
         void AddMovie(Movie movie);
