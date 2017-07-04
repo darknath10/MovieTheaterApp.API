@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheaterApp.API.Entities;
 using MovieTheaterApp.API.Models;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace MovieTheaterApp.API.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowMyApp")]
     public class ShowsController : Controller
     {
         private IMovieTheaterRepository _movieTheaterRepository;
