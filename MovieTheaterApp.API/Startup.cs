@@ -82,9 +82,6 @@ namespace MovieTheaterApp.API
                 cfg.CreateMap<MovieDtoAdd, Movie>();
                 cfg.CreateMap<MovieDto, Movie>();
                 cfg.CreateMap<Movie, MovieDto>();
-                cfg.CreateMap<Movie, MovieWithShowsDto>();
-                cfg.CreateMap<Hall, HallDto>();
-                cfg.CreateMap<Show, ShowDto>();
             });
 
             app.UseIdentity();

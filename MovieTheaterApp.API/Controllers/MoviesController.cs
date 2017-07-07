@@ -41,7 +41,7 @@ namespace MovieTheaterApp.API.Controllers
 
         [HttpGet("{id}", Name = "GetMovie")]
         [AllowAnonymous]
-        public IActionResult GetMovie(int id, bool includeShows = true)
+        public IActionResult GetMovie(int id)
         {
             //var movie = MoviesDataStore.Current.Movies.FirstOrDefault(m => m.Id == id);
             //if (movie == null)
@@ -52,14 +52,8 @@ namespace MovieTheaterApp.API.Controllers
 
             try
             {
-                var movie = _movieTheaterRepository.GetMovie(id, includeShows);
+                var movie = _movieTheaterRepository.GetMovie(id);
                 if (movie == null) return NotFound();
-
-                if (includeShows)
-                {
-                    var movieWithShows = Mapper.Map<Movie, MovieWithShowsDto>(movie);
-                    return Ok(movieWithShows);
-                }
 
                 return Ok(Mapper.Map<MovieDto>(movie));
             }
@@ -127,7 +121,7 @@ namespace MovieTheaterApp.API.Controllers
 
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
-                var movie = _movieTheaterRepository.GetMovie(movieId, false);
+                var movie = _movieTheaterRepository.GetMovie(movieId);
 
                 if (movie == null) return NotFound();
 
@@ -148,7 +142,7 @@ namespace MovieTheaterApp.API.Controllers
         {
             try
             {
-                var movie = _movieTheaterRepository.GetMovie(movieId, false);
+                var movie = _movieTheaterRepository.GetMovie(movieId);
                 if (movie == null) return NotFound();
 
                 _movieTheaterRepository.DeleteMovie(movie);

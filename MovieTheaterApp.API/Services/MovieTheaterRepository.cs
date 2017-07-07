@@ -27,13 +27,8 @@ namespace MovieTheaterApp.API.Services
             return _context.Movies.Where(m => m.Title.Contains(term));
         }
 
-        public Movie GetMovie(int movieId, bool includeShows)
+        public Movie GetMovie(int movieId)
         {
-            if (includeShows)
-            {
-                return _context.Movies.Include(m => m.Shows).ThenInclude(s => s.Hall).Where(m => m.Id == movieId).FirstOrDefault();
-            }
-
             return _context.Movies.Where(m => m.Id == movieId).FirstOrDefault();
         }
 
@@ -45,16 +40,6 @@ namespace MovieTheaterApp.API.Services
         public void DeleteMovie(Movie movie)
         {
             _context.Movies.Remove(movie);
-        }
-
-        public Hall GetHall(int hallId)
-        {
-            return _context.Halls.Where(h => h.Id == hallId).FirstOrDefault();
-        }
-
-        public void AddShow(Show show)
-        {
-            _context.Shows.Add(show);
         }
 
         public bool Save()

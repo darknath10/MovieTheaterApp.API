@@ -16,9 +16,5 @@ namespace MovieTheaterApp.API.Data
         }
 
         public DbSet<Movie> Movies { get; set; }
-
-        public DbSet<Hall> Halls { get; set; }
-
-        public DbSet<Show> Shows { get; set; }
     }
 }

@@ -13,21 +13,6 @@ namespace MovieTheaterApp.API.Data
     {        
         public static void EnsureSeedDataForContext(this MovieTheaterContext context)
         {
-            if (!context.Halls.Any())
-            {
-                var halls = new List<Hall>()
-                {
-                    new Hall() { Name = "A", Capacity = 150 },
-                    new Hall() { Name = "B", Capacity = 100 },
-                    new Hall() { Name = "C", Capacity = 80 },
-                    new Hall() { Name = "D", Capacity = 50 },
-                    new Hall() { Name = "E", Capacity = 30 }
-                };
-
-                context.AddRange(halls);
-                context.SaveChanges();
-            }
-
             if (!context.Movies.Any())
             {
                 // seed data
@@ -48,11 +33,7 @@ namespace MovieTheaterApp.API.Data
                         Trailer_path = "https://www.youtube.com/embed/2LqzF5WauAw",
                         Tmdb_id = 157336,
                         Vote_average = 8,
-                        Vote_count = 8564,
-                        Shows = new List<Show>()
-                        {
-                            new Show() { Date = new DateTime(2017, 7, 10, 21, 0, 0), HallId = 1}
-                        }
+                        Vote_count = 8564
                     },
                     new Movie()
                     {
@@ -69,11 +50,7 @@ namespace MovieTheaterApp.API.Data
                         Trailer_path = "https://www.youtube.com/embed/mjKEXxO2KNE",
                         Tmdb_id = 363676,
                         Vote_average = 6.9m,
-                        Vote_count = 1512,
-                        Shows = new List<Show>()
-                        {
-                            new Show() { Date = new DateTime(2017, 7, 10, 21, 0, 0), HallId = 2}
-                        }
+                        Vote_count = 1512
                     },
                     new Movie()
                     {
@@ -90,11 +67,7 @@ namespace MovieTheaterApp.API.Data
                         Trailer_path = "https://www.youtube.com/embed/rk-dF1lIbIg",
                         Tmdb_id = 315635,
                         Vote_average = 0,
-                        Vote_count = 0,
-                        Shows = new List<Show>()
-                        {
-                            new Show() { Date = new DateTime(2017, 7, 10, 21, 0, 0), HallId = 3}
-                        }
+                        Vote_count = 0
                     }
                 };
 

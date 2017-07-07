@@ -12,15 +12,11 @@ namespace MovieTheaterApp.API.Services
 
         IEnumerable<Movie> SearchMovies(string term);
 
-        Movie GetMovie(int movieId, bool includeShows);
+        Movie GetMovie(int movieId);
 
         void AddMovie(Movie movie);
 
         void DeleteMovie(Movie movie);
-
-        Hall GetHall(int hallId);
-
-        void AddShow(Show show);
 
         bool Save();
     }
