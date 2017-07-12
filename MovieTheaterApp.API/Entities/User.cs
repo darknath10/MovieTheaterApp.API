@@ -8,5 +8,6 @@ namespace MovieTheaterApp.API.Entities
 {
     public class User : IdentityUser
     {
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }
