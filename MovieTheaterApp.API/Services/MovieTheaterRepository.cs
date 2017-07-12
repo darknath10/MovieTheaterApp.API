@@ -42,6 +42,21 @@ namespace MovieTheaterApp.API.Services
             _context.Movies.Remove(movie);
         }
 
+        public IEnumerable<Review> GetReviews(int movieId)
+        {
+            return _context.Reviews.Where(r => r.MovieId == movieId).Include(r => r.User).ToList();
+        }
+
+        public Review GetReview(int movieId, User user)
+        {
+            return _context.Reviews.Where(r => r.MovieId == movieId && r.UserId == user.Id).FirstOrDefault();
+        }
+
+        public void AddReview(Review review)
+        {
+            _context.Reviews.Add(review);
+        }
+
         public bool Save()
         {
             return (_context.SaveChanges() >= 0);

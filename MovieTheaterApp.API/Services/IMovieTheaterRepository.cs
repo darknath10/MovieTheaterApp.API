@@ -18,6 +18,12 @@ namespace MovieTheaterApp.API.Services
 
         void DeleteMovie(Movie movie);
 
+        IEnumerable<Review> GetReviews(int movieId);
+
+        Review GetReview(int movieId, User user);
+
+        void AddReview(Review review);
+
         bool Save();
     }
 }
