@@ -14,7 +14,7 @@ namespace MovieTheaterApp.API.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("AllowMyApp")]
-    [Authorize]
+    [Authorize("SuperUsers")]
     public class MoviesController : Controller
     {
         private IMovieTheaterRepository _movieTheaterRepository;
