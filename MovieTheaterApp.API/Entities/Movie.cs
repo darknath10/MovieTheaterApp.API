@@ -41,5 +41,7 @@ namespace MovieTheaterApp.API.Entities
         public int? Vote_count { get; set; }
 
         public string Genres { get; set; }
+
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }
