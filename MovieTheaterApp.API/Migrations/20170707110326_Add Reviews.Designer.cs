@@ -8,9 +8,10 @@ using MovieTheaterApp.API.Data;
 namespace MovieTheaterApp.API.Migrations
 {
     [DbContext(typeof(MovieTheaterContext))]
-    partial class MovieTheaterContextModelSnapshot : ModelSnapshot
+    [Migration("20170707110326_Add Reviews")]
+    partial class AddReviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
